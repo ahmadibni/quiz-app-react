@@ -1,11 +1,14 @@
-import headerImage from "./assets/quiz-logo.png"
+import Header from "./components/Header";
+import Quiz from "./components/Quiz";
 
 function App() {
   return (
-    <header>
-      <img src={headerImage} alt="" />
-      <h1></h1>
-    </header>
+    <>
+      <Header />
+      <main>
+        <Quiz />
+      </main>
+    </>
   );
 }
 
