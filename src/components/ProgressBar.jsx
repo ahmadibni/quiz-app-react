@@ -7,10 +7,8 @@ function ProgressBar({ onTimeout, timeout }) {
     const timer = setTimeout(() => {
       onTimeout(true);
     }, timeout);
-    // console.log("Timer set");
 
     return () => {
-      // console.log("Timer cleanup");
       clearTimeout(timer);
     };
   }, [onTimeout, timeout]);

@@ -15,16 +15,18 @@ function Answers({ answers, selectedAnswer, answerState, onSelectAnswer }) {
         let buttonClass = null;
         let buttonDisabled = false;
 
+        // if (answerState !== "") {
+        //   buttonDisabled = true;
+        // }
+
         if (answerState === "answered" && isSelected) {
           buttonClass = "selected";
-          buttonDisabled = true;
         }
 
         if (
           (answerState === "correct" || answerState === "wrong") &&
           isSelected
         ) {
-          buttonDisabled = true;
           buttonClass = answerState;
         }
 

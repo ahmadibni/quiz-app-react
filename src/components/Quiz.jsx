@@ -11,6 +11,8 @@ function Quiz() {
 
   const quizIsOver = activeQuestion === QUESTION.length;
 
+  console.log(activeQuestion);
+
   const handleSelectAnswers = useCallback(
     (selected) => {
       if (quizIsOver) {
@@ -19,19 +21,17 @@ function Quiz() {
       setAnswerState("answered");
       setUserAnswers((prev) => [...prev, selected]);
 
-      
-        setTimeout(() => {
-          if (QUESTION[activeQuestion].answers[0] === selected) {
-            setAnswerState("correct");
-          } else {
-            setAnswerState("wrong");
-          }
+      setTimeout(() => {
+        if (QUESTION[activeQuestion].answers[0] === selected) {
+          setAnswerState("correct");
+        } else {
+          setAnswerState("wrong");
+        }
 
-          setTimeout(() => {
-            setAnswerState("");
-          }, 2000);
-        }, 1000);
-      
+        setTimeout(() => {
+          setAnswerState("");
+        }, 2000);
+      }, 1000);
     },
     [activeQuestion]
   );
@@ -50,7 +50,7 @@ function Quiz() {
             <li key={index}>
               <h3>{index + 1}</h3>
               <p className="question">{item.text}</p>
-              <p className="user-answer">{userAnswers[index].answer}</p>
+              <p className="user-answer">{userAnswers[index]}</p>
             </li>
           ))}
         </ol>
