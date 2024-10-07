@@ -4,11 +4,13 @@ function ProgressBar({ onTimeout, timeout }) {
   const [timeRemaining, setTimeRemaining] = useState(timeout);
 
   useEffect(() => {
-    const timer = setTimeout(onTimeout, timeout);
-    console.log("Timer set");
-    
+    const timer = setTimeout(() => {
+      onTimeout(true);
+    }, timeout);
+    // console.log("Timer set");
+
     return () => {
-      console.log("Timer cleanup");
+      // console.log("Timer cleanup");
       clearTimeout(timer);
     };
   }, [onTimeout, timeout]);
