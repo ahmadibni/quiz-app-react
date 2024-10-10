@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-function Answers({ answers, selectedAnswer, answerState, onSelectAnswer }) {
+function Answers({ answers, userAnswer, answerState, onSelectAnswer }) {
   const shuffledAnswers = useRef();
 
   if (!shuffledAnswers.current) {
@@ -11,13 +11,8 @@ function Answers({ answers, selectedAnswer, answerState, onSelectAnswer }) {
   return (
     <ul id="answers">
       {shuffledAnswers.current.map((answer) => {
-        const isSelected = selectedAnswer === answer;
+        const isSelected = userAnswer === answer;
         let buttonClass = null;
-        let buttonDisabled = false;
-
-        // if (answerState !== "") {
-        //   buttonDisabled = true;
-        // }
 
         if (answerState === "answered" && isSelected) {
           buttonClass = "selected";
@@ -35,7 +30,7 @@ function Answers({ answers, selectedAnswer, answerState, onSelectAnswer }) {
             <button
               onClick={() => onSelectAnswer(answer)}
               className={buttonClass}
-              disabled={buttonDisabled}
+              disabled={answerState !== ""}
             >
               {answer}
             </button>

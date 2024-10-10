@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 
-function ProgressBar({ onTimeout, timeout }) {
+function ProgressBar({ onTimeout, timeout, mode }) {
   const [timeRemaining, setTimeRemaining] = useState(timeout);
 
   useEffect(() => {
+    console.log(`Timer Set ${timeout}`);
     const timer = setTimeout(() => {
-      onTimeout(true);
+      if (onTimeout) {
+        onTimeout();
+      }
     }, timeout);
 
     return () => {
@@ -19,12 +22,11 @@ function ProgressBar({ onTimeout, timeout }) {
     }, 10);
 
     return () => {
-      setTimeRemaining(timeout);
       clearInterval(interval);
     };
   }, []);
 
-  return <progress value={timeRemaining} max={timeout} />;
+  return <progress value={timeRemaining} max={timeout} className={mode} />;
 }
 
 export default ProgressBar;

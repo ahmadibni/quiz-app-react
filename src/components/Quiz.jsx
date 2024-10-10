@@ -1,44 +1,26 @@
 import { useState, useCallback, useRef } from "react";
-import QUESTION from "../question.js";
 import imgComplete from "../assets/quiz-complete.png";
 import QuizQuestion from "./QuizQuestion.jsx";
+import QUESTION from "../question.js";
 
 function Quiz() {
-  const [answerState, setAnswerState] = useState("");
   const [userAnswers, setUserAnswers] = useState([]);
-  const activeQuestion =
-    answerState === "" ? userAnswers.length : userAnswers.length - 1;
+  const activeQuestion = userAnswers.length;
 
   const quizIsOver = activeQuestion === QUESTION.length;
 
-  console.log(activeQuestion);
-
-  const handleSelectAnswers = useCallback(
-    (selected) => {
-      if (quizIsOver) {
-        return;
-      }
-      setAnswerState("answered");
-      setUserAnswers((prev) => [...prev, selected]);
-
-      setTimeout(() => {
-        if (QUESTION[activeQuestion].answers[0] === selected) {
-          setAnswerState("correct");
-        } else {
-          setAnswerState("wrong");
-        }
-
-        setTimeout(() => {
-          setAnswerState("");
-        }, 2000);
-      }, 1000);
-    },
-    [activeQuestion]
-  );
+  const handleSetAnswers = useCallback((selected) => {
+    if (quizIsOver) {
+      return;
+    }
+    setUserAnswers((prev) => [...prev, selected]);
+  }, []);
 
   const handleSkipAnswers = useCallback(() => {
-    handleSelectAnswers(null);
-  }, []);
+    handleSetAnswers(null);
+  }, [handleSetAnswers]);
+
+  console.log(activeQuestion);
 
   if (quizIsOver) {
     return (
@@ -62,11 +44,9 @@ function Quiz() {
     <section id="quiz">
       <QuizQuestion
         key={activeQuestion}
-        question={QUESTION[activeQuestion]}
-        selectedAnswer={userAnswers[activeQuestion]}
-        answerState={answerState}
-        onTimeout={handleSkipAnswers}
-        onSelectAnswer={handleSelectAnswers}
+        myIndex={activeQuestion}
+        onSkip={handleSkipAnswers}
+        onSelectAnswer={handleSetAnswers}
       />
     </section>
   );
