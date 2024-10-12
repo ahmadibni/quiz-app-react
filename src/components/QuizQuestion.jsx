@@ -9,7 +9,7 @@ function QuizQuestion({ myIndex, onSkip, onSelectAnswer }) {
     isTrue: null,
   });
 
-  let timeout = 5000;
+  let timeout = 2000;
   if (answer.selectedAnswer) {
     timeout = 1000;
   }
@@ -17,20 +17,22 @@ function QuizQuestion({ myIndex, onSkip, onSelectAnswer }) {
     timeout = 2000;
   }
 
-  function handleSelectAnswer(answer) {
+  function handleSelectAnswer(selected) {
     setAnswer({
-      selectedAnswer: answer,
+      selectedAnswer: selected,
       isTrue: null,
     });
 
     setTimeout(() => {
+      const isTrue = QUESTION[myIndex].answers[0] === selected;
+
       setAnswer({
-        selectedAnswer: answer,
-        isTrue: QUESTION[myIndex].answers[0] === answer,
+        selectedAnswer: selected,
+        isTrue: isTrue,
       });
 
       setTimeout(() => {
-        onSelectAnswer(answer);
+        onSelectAnswer(selected);
       }, 2000);
     }, 1000);
   }
@@ -46,8 +48,7 @@ function QuizQuestion({ myIndex, onSkip, onSelectAnswer }) {
     <div id="question">
       <ProgressBar
         key={timeout}
-        onTimeout={onSkip}
-        // onTimeout={answer.selectedAnswer === "" ? onSkip : null}
+        onTimeout={answer.selectedAnswer === "" ? onSkip : null}
         timeout={timeout}
         mode={answerState}
       />

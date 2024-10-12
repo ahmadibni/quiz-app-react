@@ -4,7 +4,6 @@ function ProgressBar({ onTimeout, timeout, mode }) {
   const [timeRemaining, setTimeRemaining] = useState(timeout);
 
   useEffect(() => {
-    console.log(`Timer Set ${timeout}`);
     const timer = setTimeout(() => {
       if (onTimeout) {
         onTimeout();
